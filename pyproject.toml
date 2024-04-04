@@ -8,7 +8,7 @@ packages = [{ include = "app" }]
 
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.13"
 
 # For the Jupyter Notebook examples
 python-dotenv = "^1.0.1"
