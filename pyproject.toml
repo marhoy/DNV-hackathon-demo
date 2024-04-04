@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "hackathon"
+version = "0.1.0"
+description = "Example project for the DNV hackathon 2024"
+authors = ["Martin Høy <martin.hoy@dnv.com>"]
+readme = "README.md"
+packages = [{ include = "app" }]
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# For the Jupyter Notebook examples
+python-dotenv = "^1.0.1"
+langchain = "^0.1.14"
+langchain-openai = "^0.1.1"
+scikit-learn = "^1.4.1.post1"
+
+# Additional for serving langchain templates
+uvicorn = "^0.23.2"
+langserve = { extras = ["server"], version = ">=0.0.30" }
+pydantic = "<2"
+pirate-speak = { path = "packages/pirate-speak", develop = true }
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+langchain-cli = "^0.0.21"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# Make isort compatible with black
+[tool.isort]
+profile = "black"
+
+# mypy configuration
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+disable_error_code = "import-untyped" # Ignore missing stubs errors
+follow_imports = "silent"
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_any_generics = true
+check_untyped_defs = true
+no_implicit_reexport = true
+
+# for strict mypy: (this is the tricky one :-))
+disallow_untyped_defs = true
+
+[tool.pydantic-mypy]
+pinit_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
