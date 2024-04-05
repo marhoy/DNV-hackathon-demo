@@ -12,12 +12,26 @@ Create a file named e.g. `secrets.env` in the root of the project and add the fo
 
 ```shell
 # Required: OpenAI API key
-export OPENAI_API_KEY=<your-openai-api-key>
+OPENAI_API_KEY=<your-openai-api-key>
 
 # Optional: If you want to use LangSmith
-export LANGCHAIN_TRACING_V2=true
-export LANGCHAIN_API_KEY=<your-api-key>
-export LANGCHAIN_PROJECT=<your-project>  # if not specified, defaults to "default"
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=<your-api-key>
+LANGCHAIN_PROJECT=<your-project>  # if not specified, defaults to "default"
+```
+
+If you want to make the environment variables available to a specific command, you can
+use `dotenv` like this:
+
+```bash
+dotenv -f secrets.env run <your-command>
+```
+
+Or if you want to export all the environment variables in the file to your shell, you can
+do this:
+
+```bash
+export $(cat secrets.env | xargs)
 ```
 
 ## Installing all dependencies
