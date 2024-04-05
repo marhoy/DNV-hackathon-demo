@@ -15,7 +15,7 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        exclude: ^packages/
+        # exclude: ^packages/
         additional_dependencies:
           - pydantic
           - types-requests
