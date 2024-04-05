@@ -1,4 +1,15 @@
-# Setting up a development environment
+# Overview
+
+This repository contains code for demonstrating LLM applications using LangChain and the
+LangServe app with templates. It was written for the 2024 digital trainee hackathon at
+DNV.
+
+This repository already contains a few
+[templates](https://python.langchain.com/docs/templates/) from the [LangChain
+repository](https://github.com/langchain-ai/langchain/blob/master/templates/README.md).
+You can add more templates by following the instructions below.
+
+# How to set up a development environment
 
 ## Standard Python prerequisites
 
@@ -14,7 +25,7 @@ Create a file named e.g. `secrets.env` in the root of the project and add the fo
 # Required: OpenAI API key
 OPENAI_API_KEY=<your-openai-api-key>
 
-# Optional: If you want to use LangSmith
+# Optional: If you want to use LangSmith for tracing / debugging
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=<your-api-key>
 LANGCHAIN_PROJECT=<your-project>  # if not specified, defaults to "default"
@@ -42,9 +53,15 @@ Run the following command to install the project dependencies:
 poetry install
 ```
 
+# Notebooks with example code
+
+I the `notebooks` directory, you will find a few Jupyter notebooks with example code for
+understanding the use of Embeddings and LLMs in general.
+
 # Launching the LangServe app
 
-Load secrets from the .env-file and start the LangServe app:
+Load secrets from the .env-file and start the LangServe app. Optionally change the port
+number to something else.
 
 ```bash
 dotenv -f secrets.env run uvicorn app.server:app --host 0.0.0.0 --port 8765 --reload
@@ -55,11 +72,11 @@ dotenv -f secrets.env run uvicorn app.server:app --host 0.0.0.0 --port 8765 --re
 ## Adding a package
 
 ```bash
-# adding packages from
+# Add packages from
 # https://github.com/langchain-ai/langchain/tree/master/templates
 langchain app add --no-pip <package-name>
 
-# Install the package in the environment
+# Install the package and its dependencies in the virtual environment
 poetry update
 ```
 
@@ -70,7 +87,7 @@ poetry update
 ## Removing a package
 
 ```bash
-# Remove the package from the environment
+# Remove the package and its dependencies from the environment
 poetry remove <package-name>
 
 # Remove the files from the `packages` directory
@@ -85,8 +102,8 @@ Build the Docker image:
 docker build . -t my-langserve-app
 ```
 
-Running the Docker container. Inside the container, uvicorn will listen to port 80.
-Map that to whatever port you want to use (the example below uses port 8765).
+Run the Docker container. Inside the container, uvicorn will listen to port 80. We map
+that to whatever port we want to use (the example below uses port 8765).
 
 ```bash
 docker run --rm -it -p 8765:80 --env-file secrets.env my-langserve-app
