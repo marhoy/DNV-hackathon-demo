@@ -19,11 +19,26 @@ You can add more templates by following the instructions below.
 
 ## Providing secrets
 
-Create a file named e.g. `secrets.env` in the root of the project and add the following content:
+The examples assume that you have access to OpenAI models through an API. You can choose
+between two different APIs:
+
+1. The OpenAI API: You need to provide an API key.
+1. An Azure OpenAI instance: You need to provide an endpoint, an API key and a version.
+
+If you want to, you can also use [LangSmith](https://smith.langchain.com/) for tracing
+and debugging. In that case, you need to provide an API key and a project name.
+
+Create a file named e.g. `secrets.env` in the root of the project and add the following
+content:
 
 ```shell
-# Required: OpenAI API key
+# Required for the OpenAI API
 OPENAI_API_KEY=<your-openai-api-key>
+
+# Required for the Azure OpenAI API
+AZURE_OPENAI_ENDPOINT=<your-azure-openai-endpoint>
+AZURE_OPENAI_API_KEY=<your-azure-openai-api-key>
+OPENAI_API_VERSION=2024-02-01
 
 # Optional: If you want to use LangSmith for tracing / debugging
 LANGCHAIN_TRACING_V2=true
@@ -64,7 +79,7 @@ Load secrets from the .env-file and start the LangServe app. Optionally change t
 number to something else.
 
 ```bash
-dotenv -f secrets.env run uvicorn app.server:app --host 0.0.0.0 --port 8765 --reload
+dotenv -f secrets.env run langchain serve --port 8765
 ```
 
 # Adding more langchain template packages
